@@ -94,8 +94,8 @@
 // }
 
 
-async function foobar() {
-    console.log("in foobar");
+async function scrape() {
+    console.log("in scrape function...");
     let data;
 
     // Note the await keyword
@@ -110,5 +110,4 @@ async function foobar() {
 }
 
 console.log("hi you");
-foobar();
-// scrape();
+scrape();
