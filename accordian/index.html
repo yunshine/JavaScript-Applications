@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordian</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="accordian">
+        <div class="accordian-label">
+            <h2 class="accordian-name">Item 1</h2>
+            <h2 class="accordian-toggle">+</h2>
+        </div>
+        <div class="accordian-text">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit aliquam repellat maiores asperiores
+                voluptatem? Doloremque iusto veniam architecto eos, molestias illo aliquam aut, corporis nemo
+                repellendus eveniet eum! Ipsa, optio. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                alias tempora, doloremque quibusdam quo deserunt omnis vitae enim possimus ut laboriosam? Rerum
+                necessitatibus ipsam alias totam sed voluptate perferendis nobis?</p>
+        </div>
+    </div>
+    <div class="accordian">
+        <div class="accordian-label">
+            <h2 class="accordian-name">Item 2</h2>
+            <h2 class="accordian-toggle">+</h2>
+        </div>
+        <div class="accordian-text">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit aliquam repellat maiores
+                asperiores
+                voluptatem? Doloremque iusto veniam architecto eos, molestias illo aliquam aut, corporis nemo
+                repellendus eveniet eum! Ipsa, optio. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                alias tempora, doloremque quibusdam quo deserunt omnis vitae enim possimus ut laboriosam? Rerum
+                necessitatibus ipsam alias totam sed voluptate perferendis nobis?</p>
+        </div>
+    </div>
+    <div class="accordian">
+        <div class="accordian-label">
+            <h2 class="accordian-name">Item 3</h2>
+            <h2 class="accordian-toggle">+</h2>
+        </div>
+        <div class="accordian-text">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit aliquam repellat maiores
+                asperiores
+                voluptatem? Doloremque iusto veniam architecto eos, molestias illo aliquam aut, corporis nemo
+                repellendus eveniet eum! Ipsa, optio. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eius
+                alias tempora, doloremque quibusdam quo deserunt omnis vitae enim possimus ut laboriosam? Rerum
+                necessitatibus ipsam alias totam sed voluptate perferendis nobis?</p>
+        </div>
+    </div>
+
+    <script>
+        const labels = document.querySelectorAll(".accordian");
+
+        labels.forEach(label => {
+            label.addEventListener("click", e => {
+                const toggle = label.querySelector(".accordian-toggle");
+                const text = label.querySelector(".accordian-text");
+
+                if (toggle.innerText === "+") {
+                    toggle.innerText = "-";
+                } else {
+                    toggle.innerText = "+";
+                }
+
+                text.classList.toggle("hidden");
+            });
+        })
+    </script>
+</body>
+
+</html>

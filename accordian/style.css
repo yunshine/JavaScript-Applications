@@ -1,0 +1,29 @@
+.accordian {
+    margin: 16px auto;
+    width: 800px;
+}
+.accordian-label {
+    background-color: cornflowerblue;
+    color: white;
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+.accordian-label h2 {
+    padding: 12px 24px;
+    margin: 0;
+}
+.accordian-text {
+    transition: visibility 0s linear 0s, opacity 300ms;
+    background-color:lightgrey;
+    padding: 16px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.hidden {
+    display: none;
+}
