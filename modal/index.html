@@ -10,11 +10,11 @@
 </head>
 
 <body>
-    <button>Open Modal</button>
+    <button onclick="test()">Open Modal</button>
     <div id="modal">
         <div class="modal-label-bar">
             <p class="modal-label-text">This Is A Modal</p>
-            <button class="modal-close-button">&times;</button>
+            <button class="modal-close-button" onclick="test()">&times;</button>
         </div>
         <div class="modal-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ratione impedit
             commodi in maxime dolor aspernatur assumenda quisquam accusamus quia quibusdam, neque, fugit officia cumque
@@ -24,11 +24,13 @@
             excepturi iste illum. Quibusdam, consectetur deserunt. Repudiandae sit alias nobis culpa ex, suscipit
             impedit autem!
         </div>
-        <div id="overlay">
-        </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="overlay">
+    </div>
+
+    <script src="script.js">
+    </script>
 </body>
 
 </html>

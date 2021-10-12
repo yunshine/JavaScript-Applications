@@ -1,0 +1,59 @@
+#modal {
+    border: 1px solid black;
+    width: 480px;
+    height: 480px;
+    max-width: 85%;
+    max-height: 85%;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background-color: rgb(255, 248, 238);
+    z-index: 8;
+    border-radius: 8px;
+    transition: all .18s;
+}
+#modal.active{
+    transform: translate(-50%, -50%) scale(1);
+}
+.modal-label-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid black;
+    font-size: 24px;
+    font-weight: 600;
+}
+.modal-label-bar p {
+    padding: 0;
+    margin: 0;
+}
+
+.modal-label-bar button {
+    background-color: rgb(255, 248, 238);
+    outline: none;
+    border: none;
+    padding: 8px 0px 8px 24px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.modal-text {
+    padding: 8px 16px;
+}
+#overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(24, 24, 24, .4);
+    transition: all .18s;
+    pointer-events: none;
+    opacity: 0;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
