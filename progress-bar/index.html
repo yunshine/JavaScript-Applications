@@ -38,10 +38,12 @@
                 if (fillWidth >= 100) clearInterval(interval);
             }, 50);
         }
+
         const stop = () => {
             console.log("stop");
             clearInterval(interval);
         }
+
         const reset = () => {
             console.log("reset");
             fillWidth = 0;
