@@ -10,22 +10,36 @@
 </head>
 
 <body>
-    <div class="progress-bar-container">
-        <div class="progress-bar-fill"></div>
+    <div class="container">
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill"></div>
+        </div>
         <button onclick="start()">Start</button>
         <button onclick="stop()">Stop</button>
         <button onclick="reset()">Reset</button>
     </div>
 
     <script>
+        const fill = document.querySelector(".progress-bar-fill");
+        let fillWidth = 0;
+        let interval;
+
         const start = () => {
             console.log("start");
+            interval = setInterval(() => {
+                fillWidth += 1;
+                fill.style.width = `${fillWidth}%`;
+                if (fillWidth >= 100) clearInterval(interval);
+            }, 50);
         }
         const stop = () => {
             console.log("stop");
+            clearInterval(interval);
         }
         const reset = () => {
             console.log("reset");
+            fillWidth = 0;
+            fill.style.width = "0%";
         }
     </script>
 </body>
