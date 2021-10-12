@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <div class="progress-bar-container">
-            <p>39%</p>
+            <p>0%</p>
             <div class="progress-bar-fill">
             </div>
         </div>
@@ -23,6 +23,7 @@
 
     <script>
         const fill = document.querySelector(".progress-bar-fill");
+        const fillText = document.querySelector("p");
         let fillWidth = 0;
         let interval;
 
@@ -31,6 +32,7 @@
             interval = setInterval(() => {
                 fillWidth += 1;
                 fill.style.width = `${fillWidth}%`;
+                fillText.innerText = `${fillWidth}%`;
                 if (fillWidth >= 100) clearInterval(interval);
             }, 50);
         }
