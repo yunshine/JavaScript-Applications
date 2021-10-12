@@ -4,11 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrape</title>
+    <title>Progress Bar</title>
 </head>
 <body>
-    <h1>Scrape</h1>
-    <!-- <script src="FetchDemo.js"></script> -->
-    <script src="Scrape.js"></script>
+    <div class="progress-bar-container">
+        <div class="progress-bar-fill"></div>
+        <button onclick="start()">Start</button>
+        <button onclick="stop()">Stop</button>
+        <button onclick="reset()">Reset</button>
+    </div>
+    
+    <script>
+        const start = () => {
+            console.log("start");
+        }
+        const stop= () => {
+            console.log("stop");
+        }
+        const reset= () => {
+            console.log("reset");
+        }
+    </script>
 </body>
 </html>
