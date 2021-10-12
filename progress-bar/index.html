@@ -30,9 +30,11 @@
         const start = () => {
             console.log("start");
             interval = setInterval(() => {
-                fillWidth += 1;
-                fill.style.width = `${fillWidth}%`;
-                fillText.innerText = `${fillWidth}%`;
+                if (fillWidth < 100) {
+                    fillWidth += 1;
+                    fill.style.width = `${fillWidth}%`;
+                    fillText.innerText = `${fillWidth}%`;
+                }
                 if (fillWidth >= 100) clearInterval(interval);
             }, 50);
         }
@@ -44,6 +46,7 @@
             console.log("reset");
             fillWidth = 0;
             fill.style.width = "0%";
+            fillText.innerText = "0%";
         }
     </script>
 </body>
