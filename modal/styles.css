@@ -8,7 +8,7 @@
     top: 25%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background-color: rgb(255, 248, 238);
+    background-color: rgb(255, 229, 192);
     z-index: 8;
     border-radius: 8px;
     transition: all .18s;
@@ -31,7 +31,7 @@
 }
 
 .modal-label-bar button {
-    background-color: rgb(255, 248, 238);
+    background-color: rgb(255, 229, 192);
     outline: none;
     border: none;
     padding: 8px 0px 8px 24px;
