@@ -136,7 +136,7 @@ getTodosWithPromises('json/todos.json').then(data => {
 });
 
 
-// the fetch api - the newer, better native api for doing everything that above...l
+// the FETCH api - the newer, better native api for doing everything that above...l
 // ==========================================================================
 
 // the fetch function below returns a promise with a resolve and a reject, just like what we saw above...
@@ -159,7 +159,7 @@ fetch('json/todos.json').then(response => {
 // whenever we use the async key word, the function will return a PROMISE...
 const getTodosWithAsyncAwait = async () => {
     // once the fetch Promise below is resolved, JavaScript will then assign the data as the value to 'response'... this data will be a response object...
-    const response = await fetch('json/todos.json');
+    const response = await fetch('json/todos.json');  // using the keyword "await" will make it so that this fetch returns a promise...
     console.log("The 'response' variable from getTodosWithAsyncAwait: ", response);
 
     if (response.status !== 200) {
@@ -182,3 +182,31 @@ getTodosWithAsyncAwait()
 
 console.log("c");
 console.log("d");
+
+
+
+// Async & Await - TEST & TEMPLATE...
+// ==========================================================================
+const asyncAwaitTestFunction = async (resource) => {
+    // once the fetch Promise below is resolved, JavaScript will then assign the data as the value to 'response'... this data will be a response object...
+    const response = await fetch(resource);  // using the keyword "await" will make it so that this fetch returns a promise...
+    console.log("The 'response' variable from asyncAwaitTestFunction: ", response);
+
+    if (response.status !== 200) {
+        // when we throw a new Error in an async function, the returned Promise is 'rejected', not 'resolved'...
+        throw new Error('new Error thrown...');
+    }
+
+    const data = await response.json();
+    console.log("The 'data' variable from asyncAwaitTestFunction: ", data);
+
+    return data;
+};
+
+asyncAwaitTestFunction('json/shoppingList.json')
+    .then(data => {
+        console.log("the data from shoppingList.json: ", data);
+    })
+    .catch(err => {
+        console.log("error: ", err);
+    });
