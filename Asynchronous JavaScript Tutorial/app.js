@@ -146,7 +146,7 @@ fetch('json/todos.json').then(response => {
     console.log('The Fetch API Resolved: ', response);
     return response.json(); /* this returns another promise... */
 }).then(data => {
-    console.log('Data from the Fetch API: ', data);
+    console.log('Data from the Fetch API: ', data);  // use the THEN keyword to access the data from the fetch promise...
 }).catch(err => {
     console.log('The Fetch API Rejected: ', err);
 });
