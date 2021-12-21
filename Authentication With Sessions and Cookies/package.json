@@ -9,6 +9,7 @@
   "author": "Yun Chung",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "express-session": "^1.17.2"
   }
 }
