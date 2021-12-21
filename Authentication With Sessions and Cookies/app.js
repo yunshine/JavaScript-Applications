@@ -2,19 +2,22 @@ const express = require("express");
 const session = require("express-session");
 const app = express();
 
-// initialize middleware, which fires for every request to the server, with app() and pass it the session variable...
+// use app.use() to initialize middleware. This now fires for every request to the server, and passes/adds the session variable to the req object...
 // the session variable below receives an object with options...
 app.use(session({
     secret: 'this secret key will sign the cookie that is saved in the browser',
-    resave: false, // for every request to the server, we want to create a new session
-    saveUninitialized: false // if we have not touched or modified the session, we don't want it to save
+    resave: false, // for every request to the server, do you want to create a new session?
+    saveUninitialized: false // if we have not touched or modified the session, do you want to save?
 }));
 
 app.get('/', (req, res) => {
+    req.session.addSomething = "something added/done/edited to the req.session";
+    console.log("This is the session created by express-session. We can see it in the req object because of app.use()... => ", req.session);
+    console.log("This is the session ID created by express-session: ", req.session.id);  // this session.id will match the id of the cookie in the browser so that the server knows that the browser is using this specific session...
     res.send("Authentication With Sessions and Cookies");
 });
 
-app.listen(3030, () => {
+app.listen(3000, () => {
     console.log("Welcome to Authentication With Sessions and Cookies! You've created a server using Express. The server has started and is now listening on port 3000...");
 });
 
