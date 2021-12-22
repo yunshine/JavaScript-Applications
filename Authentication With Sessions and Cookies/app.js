@@ -1,11 +1,12 @@
 const express = require("express");
 const session = require("express-session");
+const MongoDBSession = require("connect-mongodb-session")(session);
 const mongoose = require("mongoose");
 const app = express();
 
 // this will select the database url based on the environment that runs it...
-const url = process.env.DATABASEURL || 'mongodb://localhost:27017/sessions-and-cookies';
-mongoose.connect(url, {
+const mongoURL = process.env.DATABASEURL || 'mongodb://localhost:27017/sessions-and-cookies';
+mongoose.connect(mongoURL, {
     useNewUrlParser: true
     // The options below are now deprecated in newer versions of Mongoose...
     // useCreateIndex: true,
@@ -15,12 +16,18 @@ mongoose.connect(url, {
     .then((res) => console.log('Your "Authentication With Sessions and Cookies" project is connected to the Mongo database!'))
     .catch(error => console.log("Mongo database not connected...", error.message));
 
+const store = new MongoDBSession({
+    uri: mongoURL,
+    collection: 'mySessions'
+});
+
 // use app.use() to initialize middleware. This now fires for every request to the server, and passes/adds the session variable to the req object...
 // the session variable below receives an object with options...
 app.use(session({
     secret: 'this secret key will sign the cookie that is saved in the browser',
     resave: false, // for every request to the server, do you want to create a new session?
-    saveUninitialized: false // if we have not touched or modified the session, do you want to save?
+    saveUninitialized: false, // if we have not touched or modified the session, do you want to save?
+    store: store,
 }));
 
 app.get('/', (req, res) => {
