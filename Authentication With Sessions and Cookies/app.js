@@ -3,6 +3,7 @@ const session = require("express-session");
 const MongoDBSession = require("connect-mongodb-session")(session);  // this package is used to save our sessions to MongoDB...
 const mongoose = require("mongoose");
 const app = express();
+const User = require('./models/user');
 
 // this will select the database url based on the environment that runs it...
 const mongoURL = process.env.DATABASEURL || 'mongodb://localhost:27017/sessions-and-cookies';
