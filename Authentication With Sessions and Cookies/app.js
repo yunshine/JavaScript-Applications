@@ -1,6 +1,19 @@
 const express = require("express");
 const session = require("express-session");
+const mongoose = require("mongoose");
 const app = express();
+
+// this will select the database url based on the environment that runs it...
+const url = process.env.DATABASEURL || 'mongodb://localhost:27017/sessions-and-cookies';
+mongoose.connect(url, {
+    useNewUrlParser: true
+    // The options below are now deprecated in newer versions of Mongoose...
+    // useCreateIndex: true,
+    // useUnifiedTopology: true,
+    // useFindAndModify: false
+})
+    .then((res) => console.log('Your "Authentication With Sessions and Cookies" project is connected to the Mongo database!'))
+    .catch(error => console.log("Mongo database not connected...", error.message));
 
 // use app.use() to initialize middleware. This now fires for every request to the server, and passes/adds the session variable to the req object...
 // the session variable below receives an object with options...
@@ -28,5 +41,5 @@ The Full Stack Junkie Tuturial - https://www.youtube.com/watch?v=TDe7DRYK8vU
             - When the client makes a request to our server, the server will automatically create a SESSION and store this SESSION in the database.
             - When the server responds to the client, it sends a COOKIE to the client which will be saved in the browser. This COOKIE is a reference which points to the session that was stored in the database because it contains the SESSION ID (see img1...).
 
-    - The express-session packages -  sets the needed cookie for the specified session
+    - The express-session packages -  sets the needed cookie for the specified session...
 */
