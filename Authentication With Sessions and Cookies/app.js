@@ -1,6 +1,6 @@
 const express = require("express");
 const session = require("express-session");
-const MongoDBSession = require("connect-mongodb-session")(session);
+const MongoDBSession = require("connect-mongodb-session")(session);  // this package is used to save our sessions to MongoDB...
 const mongoose = require("mongoose");
 const app = express();
 
@@ -16,6 +16,7 @@ mongoose.connect(mongoURL, {
     .then((res) => console.log('Your "Authentication With Sessions and Cookies" project is connected to the Mongo database!'))
     .catch(error => console.log("Mongo database not connected...", error.message));
 
+// the store variable below is used to store sessions to MongoDB using the connect-mongodb-session package...
 const store = new MongoDBSession({
     uri: mongoURL,
     collection: 'mySessions'
@@ -27,7 +28,7 @@ app.use(session({
     secret: 'this secret key will sign the cookie that is saved in the browser',
     resave: false, // for every request to the server, do you want to create a new session?
     saveUninitialized: false, // if we have not touched or modified the session, do you want to save?
-    store: store,
+    store: store, // this option is used to connect the app to the sessions stored in MongoDB through the connect-mongodb-session package...
 }));
 
 app.get('/', (req, res) => {
@@ -48,5 +49,7 @@ The Full Stack Junkie Tuturial - https://www.youtube.com/watch?v=TDe7DRYK8vU
             - When the client makes a request to our server, the server will automatically create a SESSION and store this SESSION in the database.
             - When the server responds to the client, it sends a COOKIE to the client which will be saved in the browser. This COOKIE is a reference which points to the session that was stored in the database because it contains the SESSION ID (see img1...).
 
-    - The express-session packages -  sets the needed cookie for the specified session...
+    - The express-session packages -  sets the needed cookie for the specified session. Another way to think of it is it creates the cookie and session. But remember, the session isn't saved in MongoDB yet until we bring in the connect-mongodb-session package.
+
+    - The connect-mongodb-session package is used to save our sessions to MongoDB. 
 */
