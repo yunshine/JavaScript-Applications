@@ -7,6 +7,23 @@
     <title>User Registration</title>
 </head>
 <body>
-    This is the user registration form...
+    <div class="registration-form">
+        <h3>User Registration</h3>
+        <form action="/register" method="POST">
+            <div>
+                <label for="username">Username</label>
+                <input type="text" name="username">
+            </div>
+            <div>
+                <label for="email">email</label>
+                <input type="email" name="email">
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password">
+            </div>
+            <button>Register</button>
+        </form>
+    </div>
 </body>
 </html>
