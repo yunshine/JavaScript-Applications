@@ -8,6 +8,12 @@ router.get('/test', (req, res) => {
     res.send("testing routes...");
 });
 
+// router.get('/register', (req, res) => {
+//     res.render('register');
+// });
+
+router.post('/register', (req, res) => { });
+
 // // UPDATE User - bookmarks one cafe to the user model...
 // // Q: first, before bookmarking, is the user logged in? Use middleware...
 // router.put("/users/:userID/bookmark/:cafeID", middleware.isLoggedIn, (req, res) => {
