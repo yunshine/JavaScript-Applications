@@ -4,7 +4,7 @@ const MongoDBSession = require("connect-mongodb-session")(session);  // this pac
 const mongoose = require("mongoose");
 const app = express();
 const User = require('./models/user');
-// const userRoutes = require('./routes/users');
+const userRoutes = require('./routes/users');
 
 // this will select the database url based on the environment that runs it...
 const mongoURL = process.env.DATABASEURL || 'mongodb://localhost:27017/sessions-and-cookies';
@@ -38,20 +38,13 @@ app.use(session({
 }));
 
 // Routes
-// app.use(userRoutes);
+app.use(userRoutes);
 app.get('/', (req, res) => {
     req.session.addSomething = "something added/done/edited to the req.session";
     console.log("This is the session created by express-session. We can see it in the req object because of app.use()... => ", req.session);
     console.log("This is the session ID created by express-session: ", req.session.id);  // this session.id will match the id of the cookie in the browser so that the server knows that the browser is using this specific session...
     res.send("Authentication With Sessions and Cookies - This is the landing page.");
 });
-app.get('/test', (req, res) => {
-    res.send('testing...');
-});
-app.get('/register', (req, res) => {
-    res.render('register');
-});
-
 
 app.listen(3000, () => {
     console.log("Welcome to Authentication With Sessions and Cookies! You've created a server using Express. The server has started and is now listening on port 3000...");

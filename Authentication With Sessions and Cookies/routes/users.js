@@ -8,9 +8,9 @@ router.get('/test', (req, res) => {
     res.send("testing routes...");
 });
 
-// router.get('/register', (req, res) => {
-//     res.render('register');
-// });
+router.get('/register', (req, res) => {
+    res.render('register');
+});
 
 router.post('/register', (req, res) => { });
 
