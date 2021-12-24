@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
     user = new User({
         username: username,
         email: email,
-        password: "hashedPW" // we don't want to save a string password in our database, so we'll use the bcryptjs package to encrypt/hash the password...
+        password: hashedPW // we don't want to save a string password in our database, so we'll use the bcryptjs package to encrypt/hash the password...
     });
 
     await user.save(); //Mongoose method used to save the user in the database...
@@ -35,10 +35,33 @@ router.post('/register', async (req, res) => {
     res.redirect('/login');
 });
 
+
 router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.post('/login', (req, res) => { });
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    let user = await User.findOne({ email });
+
+    // if the email provided by the user does not exist...
+    if (!user) {
+        console.log("Sorry. That email address or password is incorrect.")
+        return res.redirect('/login');
+    }
+
+    // if the email address matches, bcryptjs is used to compare the password in the req.body to the password in the database...
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log("so far so good", isMatch);
+
+    // if the password provided by the user does not match the password in the database...
+    if (!isMatch) {
+        console.log("Sorry. That email address or password is incorrect.")
+        return res.redirect('/login');
+    }
+
+    // if the password is a match, we want to log the user in...
+    res.redirect('/test');
+});
 
 module.exports = router;
