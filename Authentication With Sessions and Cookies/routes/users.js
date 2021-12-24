@@ -1,9 +1,7 @@
 const express = require('express');
+const bcrypt = require("bcryptjs"); // used to encrypt/hash passwords...
 const router = express.Router();
-const User = require('../models/user');
-
-// add in the correct models...
-const User = require('../models/user');
+const User = require('../models/user'); // add in the correct models...
 
 router.get('/test', (req, res) => {
     res.send("testing routes...");
@@ -23,12 +21,18 @@ router.post('/register', async (req, res) => {
         return res.redirect('/register');
     }
 
+    const hashedPW = await bcrypt.hash(password, 12); // the "12" is the salt, which is used to make the hash more random...
+
     // if this user doesn't already exist in the database, we need to save this new user to the database...
     user = new User({
         username: username,
         email: email,
-        password: "something" // we don't want to save this string password in our database, so we'll use bcrypt...
+        password: "hashedPW" // we don't want to save a string password in our database, so we'll use the bcryptjs package to encrypt/hash the password...
     });
+
+    await user.save(); //Mongoose method used to save the user in the database...
+
+    res.redirect('/login');
 });
 
 module.exports = router;
