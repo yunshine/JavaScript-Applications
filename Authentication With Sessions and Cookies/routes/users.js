@@ -4,7 +4,8 @@ const router = express.Router();
 const User = require('../models/user'); // add in the correct models...
 const middleware = require('../middleware/index');// add in the middlewareObject which I'll used for authorization...
 
-router.get('/test', (req, res) => {
+
+router.get('/test', middleware.isAuth, (req, res) => {
     res.send("testing routes...");
 });
 
