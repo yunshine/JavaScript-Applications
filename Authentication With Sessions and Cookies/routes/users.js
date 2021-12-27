@@ -54,7 +54,6 @@ router.post('/login', async (req, res) => {
 
     // if the email address matches, bcryptjs is used to compare the password in the req.body to the password in the database...
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("so far so good", isMatch);
 
     // if the password provided by the user does not match the password in the database...
     if (!isMatch) {
@@ -62,7 +61,8 @@ router.post('/login', async (req, res) => {
         return res.redirect('/login');
     }
 
-    // if the password is a match, we want to log the user in...
+    // if the password is a match, we want to log the user in, which means we set isAuth to be true...
+    req.session.isAuth = true;
     res.redirect('/test');
 });
 
