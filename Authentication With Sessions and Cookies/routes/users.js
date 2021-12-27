@@ -11,15 +11,15 @@ router.get('/', (req, res) => {
     res.render('home');
 });
 
-router.get('/dashboard', middleware.isAuth, (req, res) => {
+router.get('/dashboard', middleware.isLoggedIn, (req, res) => {
     res.render('dashboard');
 });
 
-router.get('/register', (req, res) => {
+router.get('/register', middleware.isNotLoggedIn, (req, res) => {
     res.render('register');
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', middleware.isNotLoggedIn, async (req, res) => {
     const { username, email, password } = req.body;
 
     // when a user registers, we need to make sure that this user doesn't already exist in the database. We'll do this by looking for the email address in the database...
@@ -44,11 +44,11 @@ router.post('/register', async (req, res) => {
 });
 
 
-router.get('/login', (req, res) => {
+router.get('/login', middleware.isNotLoggedIn, (req, res) => {
     res.render('login');
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', middleware.isNotLoggedIn, async (req, res) => {
     const { email, password } = req.body;
     let user = await User.findOne({ email });
 
