@@ -4,9 +4,8 @@ const router = express.Router();
 const User = require('../models/user'); // add in the correct models...
 const middleware = require('../middleware/index');// add in the middlewareObject which I'll used for authorization...
 
-
-router.get('/test', middleware.isAuth, (req, res) => {
-    res.send("testing routes...");
+router.get('/dashboard', middleware.isAuth, (req, res) => {
+    res.render('dashboard');
 });
 
 router.get('/register', (req, res) => {
@@ -63,7 +62,12 @@ router.post('/login', async (req, res) => {
 
     // if the password is a match, we want to log the user in, which means we set isAuth to be true...
     req.session.isAuth = true;
-    res.redirect('/test');
+    res.redirect('/dashboard');
 });
+
+// for logout logic, there is a built-in function in the express-session package that allows you to remove the session from the database
+// router.post('/logout', {
+
+// });
 
 module.exports = router;
