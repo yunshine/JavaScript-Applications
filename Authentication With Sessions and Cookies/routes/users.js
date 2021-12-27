@@ -66,8 +66,11 @@ router.post('/login', async (req, res) => {
 });
 
 // for logout logic, there is a built-in function in the express-session package that allows you to remove the session from the database
-// router.post('/logout', {
-
-// });
+router.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) throw err;
+        res.redirect('/');
+    });
+});
 
 module.exports = router;
