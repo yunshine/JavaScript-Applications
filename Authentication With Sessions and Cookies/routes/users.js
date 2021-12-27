@@ -4,6 +4,13 @@ const router = express.Router();
 const User = require('../models/user'); // add in the correct models...
 const middleware = require('../middleware/index');// add in the middlewareObject which I'll used for authorization...
 
+router.get('/', (req, res) => {
+    req.session.addSomething = "something added/done/edited to the req.session";
+    console.log("This is the session created by express-session. We can see it in the req object because of app.use()... => ", req.session);
+    console.log("This is the session ID created by express-session: ", req.session.id);  // this session.id will match the id of the cookie in the browser so that the server knows that the browser is using this specific session...
+    res.render('home');
+});
+
 router.get('/dashboard', middleware.isAuth, (req, res) => {
     res.render('dashboard');
 });
