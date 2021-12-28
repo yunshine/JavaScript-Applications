@@ -1,6 +1,6 @@
 const express = require('express');
 
-const connectDB = require('./config/db'); // mongoose settings found in the config folder
+const connectDB = require('./config/dbConfigurations'); // mongoose settings imported from the dbConfigurations.js file in the config folder
 
 const app = express();
 connectDB();
