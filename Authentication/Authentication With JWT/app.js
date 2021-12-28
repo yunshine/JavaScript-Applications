@@ -7,7 +7,7 @@ connectDB();
 
 app.use(express.json()); // Needed for incoming POST and PUT requests, because in both these requests you are sending data (in the form of some data object) to the server and you are asking the server to accept or store that data (object), which is enclosed in the body (i.e. req.body) of that (POST or PUT) Request
 
-// Routes
+// Middleware Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/events', require('./routes/events'));
 
