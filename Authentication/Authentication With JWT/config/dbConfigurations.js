@@ -1,6 +1,6 @@
 // This file is essentially nothing more than a database connection...
 const mongoose = require('mongoose');
-const config = require('config'); // used to share the json value in the default.json file
+const config = require('config'); // used to share json values from the default.json file in the config folder
 
 // const mongoURI = process.env.DATABASEURL || 'mongodb://localhost:27017/jwt-Auth';
 const mongoURI = config.get("mongoURI");
