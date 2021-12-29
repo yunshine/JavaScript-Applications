@@ -1,3 +1,4 @@
 {
-    "mongoURI": "mongodb://localhost:27017/jwt-Auth"
+    "mongoURI": "mongodb://localhost:27017/jwt-Auth",
+    "JWT_SECRET": "development_secret_string"
 }

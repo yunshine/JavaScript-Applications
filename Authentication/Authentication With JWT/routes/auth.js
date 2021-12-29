@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require("bcryptjs"); // used to encrypt/hash passwords...
+const jwt = require('jsonwebtoken');
 const config = require('config');
 const router = express.Router();
 const User = require('../models/User'); // add in correct models...
@@ -27,18 +28,22 @@ router.post('/register', async (req, res) => {
             password: hashedPW // we don't want to save a string password in our database, so we'll use the bcryptjs package to encrypt/hash the password...
         });
 
-        await user.save(); //Mongoose method used to save the user in the database...
+        const newUser = await user.save(); //Mongoose method used to save the user in the database; we also have this user saved as newUser so that we can use it with JWT...
 
         // once the user is saved, i want to send a token to the frontend to tell the frontend that this user was successfully created and is authorized to use this app...
-    } catch (error) { }
+        const payload = {
+            user: {
+                _id: newUser._id
+            }
+        };
 
+        const token = jwt.sign(payload, config.get("JWT_SECRET"), { expiresIn: '1hr' });
 
-
-
-
-    await user.save(); //Mongoose method used to save the user in the database...
-
-    res.redirect('/login');
+        res.status(201).json({ token });
+    } catch (error) {
+        console.log("There was an error in the registration process: ", error);
+        res.status(500).json({ error: "There was a server error in the registration process." });
+    }
 });
 
 module.exports = router;
