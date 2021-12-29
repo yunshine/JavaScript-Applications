@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/Event'); // add in correct models...
 
 // Index Route - Events
 router.get('/', async (req, res) => { });
