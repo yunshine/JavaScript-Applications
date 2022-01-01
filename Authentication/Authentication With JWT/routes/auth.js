@@ -24,8 +24,22 @@ router.post('/login', async (req, res) => {
             console.log("Sorry. That email address or password is incorrect.")
             return res.status(400).json({ error: "Sorry. That email address or password is incorrect." });
         }
-    } catch (error) { }
 
+        const payload = {
+            user: {
+                _id: newUser._id
+            }
+        };
+        // generates a token...
+        const token = jwt.sign(payload, config.get("JWT_SECRET"), { expiresIn: '1hr' });
+
+
+        // once the token is generated, respond to the client with this token...
+        res.status(200).json({ token }); // A 200 status code indicates... ???
+    } catch (error) {
+        console.log("There was an error in the login process: ", error);
+        res.status(500).json({ error: "There was a server error in the login process." });
+    }
 });
 
 // Register
