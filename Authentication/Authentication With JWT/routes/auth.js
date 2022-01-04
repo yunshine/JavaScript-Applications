@@ -13,7 +13,7 @@ router.post('/login', async (req, res) => {
         let user = await User.findOne({ email });
         // if the email provided by the user does not exist...
         if (!user) {
-            return res.status(400).json({ error: "Sorry. That email address or password is incorrect." });
+            return res.status(400).json({ error: "Sorry. That email address or password is incorrect." }); // The res. status() function sets the HTTP status for the response; A 400 status code indicates that the server can't or won't process the request due to something that is perceived to be a client error
         }
 
         // if the email address matches, bcryptjs is used to compare the password in the req.body to the password in the database...
@@ -22,23 +22,23 @@ router.post('/login', async (req, res) => {
         // if the password provided by the user does not match the password in the database...
         if (!isMatch) {
             console.log("Sorry. That email address or password is incorrect.")
-            return res.status(400).json({ error: "Sorry. That email address or password is incorrect." });
+            return res.status(400).json({ error: "Sorry. That email address or password is incorrect." }); // The res. status() function sets the HTTP status for the response; A 400 status code indicates that the server can't or won't process the request due to something that is perceived to be a client error
         }
 
+        // if we make it past the if statements to this point in the code, I want to create a payload and send a token (with the payload/user) to the frontend to tell the frontend that this user was successfully authenticated and is authorized to use the routes in this app...
         const payload = {
             user: {
-                _id: newUser._id
+                _id: user._id
             }
         };
         // generates a token...
         const token = jwt.sign(payload, config.get("JWT_SECRET"), { expiresIn: '1hr' });
 
-
-        // once the token is generated, respond to the client with this token...
-        res.status(200).json({ token }); // A 200 status code indicates... ???
+        // once the token is generated, respond to the client with this token. In the token that is sent to the client, we have access to the user id because we saved it in the payload...
+        res.status(200).json({ token }); // A 200 status code indicates that the request has succeeded (depending on the HTTP request method)...
     } catch (error) {
         console.log("There was an error in the login process: ", error);
-        res.status(500).json({ error: "There was a server error in the login process." });
+        res.status(500).json({ error: "There was a server error in the login process." }); // A 500 status code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request.
     }
 });
 
@@ -72,7 +72,7 @@ router.post('/register', async (req, res) => {
         const token = jwt.sign(payload, config.get("JWT_SECRET"), { expiresIn: '1hr' });
 
         // once the token is generated, respond to the client with this token. In the token that is sent to the client, we have access to the user id because we saved it in the payload...
-        res.status(201).json({ token }); // A 201 status code indicates that the request has succeeded and has led to the creation of a resource
+        res.status(201).json({ token }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
     } catch (error) {
         console.log("There was an error in the registration process: ", error);
         res.status(500).json({ error: "There was a server error in the registration process." }); // A 201 status code indicates that there was an internal server error
