@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/Event'); // add in correct models...
+const Event = require('../models/Event'); // add in correct models...
+const middleware = require('../middleware/index');// add in the middlewareObject which I'll used for authorization for protected routes...
+
 
 // Index Route - Events
 router.get('/', async (req, res) => { });
