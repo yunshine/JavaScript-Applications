@@ -5,15 +5,17 @@ const middleware = require('../middleware/index');// add in the middlewareObject
 
 
 // Index Route - Events
-router.get('/', async (req, res) => { });
+router.get('/', middleware.isAuthorized, async (req, res) => {
+    res.send("this worked perfectly fine...")
+});
 
 // CREATE Route - Events
-router.post('/events', async (req, res) => { });
+router.post('/events', middleware.isAuthorized, async (req, res) => { });
 
 // Update Route - Events
-router.put('/events/:id', async (req, res) => { });
+router.put('/events/:id', middleware.isAuthorized, async (req, res) => { });
 
 // Destroy Route - Events
-router.delete('/events/:id', async (req, res) => { });
+router.delete('/events/:id', middleware.isAuthorized, async (req, res) => { });
 
 module.exports = router;
