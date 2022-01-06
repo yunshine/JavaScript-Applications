@@ -42,9 +42,9 @@ router.post('/events', middleware.isAuthorized, async (req, res) => {
 router.put('/events/:id', middleware.isAuthorized, async (req, res) => {
     const eventID = req.params.id;
     const { title, description, date } = req.body;
-    const updatedEvent = {};
 
     try {
+        const updatedEvent = {};
         // we'll check to see if anything was updated in the req.body...
         if (title) updatedEvent.title = title;
         if (description) updatedEvent.description = description;
@@ -60,6 +60,17 @@ router.put('/events/:id', middleware.isAuthorized, async (req, res) => {
 });
 
 // Destroy Route - Events
-router.delete('/events/:id', middleware.isAuthorized, async (req, res) => { });
+router.delete('/events/:id', middleware.isAuthorized, async (req, res) => {
+    const eventID = req.params.id;
+
+    try {
+        await Event.findByIdAndRemove(eventID);
+        console.log("Event Removed.");
+        res.status(200).json({ message: 'Event Removed.' })
+    } catch (error) {
+
+    }
+
+});
 
 module.exports = router;
