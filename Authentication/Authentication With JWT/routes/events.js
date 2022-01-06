@@ -15,7 +15,26 @@ router.get('/', middleware.isAuthorized, async (req, res) => {
 });
 
 // CREATE Route - Events
-router.post('/events', middleware.isAuthorized, async (req, res) => { });
+router.post('/events', middleware.isAuthorized, async (req, res) => {
+    const { title, description, date } = req.body;
+
+    try {
+        // create a new Event object...
+        const event = new Event({
+            title,
+            description,
+            date
+        });
+
+        // save the new Event object to the database...
+        const newEvent = await event.save();
+
+        res.status(201).json({ event: newEvent }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
+    } catch (error) {
+        console.log("Something went wrong while creating your new event...", error);
+        res.status(500).json({ error: "There was a server error while creating your new event..." }); // A 500 status code indicates that there was an internal server error
+    }
+});
 
 // Update Route - Events
 router.put('/events/:id', middleware.isAuthorized, async (req, res) => { });
