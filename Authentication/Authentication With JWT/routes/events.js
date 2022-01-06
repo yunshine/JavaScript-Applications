@@ -54,7 +54,8 @@ router.put('/events/:id', middleware.isAuthorized, async (req, res) => {
         const event = await Event.findByIdAndUpdate(eventID, { $set: updatedEvent }, { new: true }); // the new: true option means that this event variable will be the updated one, not the one we found by ID
         res.status(201).json({ event }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
     } catch (error) {
-
+        console.log("Something went wrong while updating your new event...", error);
+        res.status(500).json({ error: "There was a server error while updating your new event..." }); // A 500 status code indicates that there was an internal server error
     }
 });
 
