@@ -14,6 +14,7 @@ router.get('/', middleware.isAuthorized, async (req, res) => {
     }
 });
 
+
 // CREATE Route - Events
 router.post('/events', middleware.isAuthorized, async (req, res) => {
     const { title, description, date } = req.body;
@@ -36,8 +37,26 @@ router.post('/events', middleware.isAuthorized, async (req, res) => {
     }
 });
 
+
 // Update Route - Events
-router.put('/events/:id', middleware.isAuthorized, async (req, res) => { });
+router.put('/events/:id', middleware.isAuthorized, async (req, res) => {
+    const eventID = req.params.id;
+    const { title, description, date } = req.body;
+    const updatedEvent = {};
+
+    try {
+        // we'll check to see if anything was updated in the req.body...
+        if (title) updatedEvent.title = title;
+        if (description) updatedEvent.description = description;
+        if (date) updatedEvent.date = date;
+
+        // find the Event to update, then save the updated Event to the database...
+        const event = await Event.findByIdAndUpdate(eventID, { $set: updatedEvent }, { new: true }); // the new: true option means that this event variable will be the updated one, not the one we found by ID
+        res.status(201).json({ event }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
+    } catch (error) {
+
+    }
+});
 
 // Destroy Route - Events
 router.delete('/events/:id', middleware.isAuthorized, async (req, res) => { });
