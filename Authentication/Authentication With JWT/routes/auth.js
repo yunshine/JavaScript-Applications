@@ -75,7 +75,7 @@ router.post('/register', async (req, res) => {
         res.status(201).json({ token }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
     } catch (error) {
         console.log("There was an error in the registration process: ", error);
-        res.status(500).json({ error: "There was a server error in the registration process." }); // A 201 status code indicates that there was an internal server error
+        res.status(500).json({ error: "There was a server error in the registration process." }); // A 500 status code indicates that there was an internal server error
     }
 });
 
