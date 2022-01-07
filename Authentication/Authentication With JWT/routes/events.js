@@ -68,7 +68,8 @@ router.delete('/events/:id', middleware.isAuthorized, async (req, res) => {
         console.log("Event Removed.");
         res.status(200).json({ message: 'Event Removed.' })
     } catch (error) {
-
+        console.log("Something went wrong while deleting your new event...", error);
+        res.status(500).json({ error: "There was a server error while deleting your new event..." }); // A 500 status code indicates that there was an internal server error
     }
 
 });
