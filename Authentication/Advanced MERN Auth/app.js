@@ -4,6 +4,11 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json()); // this middleware is needed for incoming POST and PUT requests, because in both these requests you are sending data (in the form of some data object) to the server and you are asking the server to accept or store that data (object), which is enclosed in the body (i.e. req.body) of that (POST or PUT) Request
+
+// Middleware Routes
+app.use('/api/auth', require('./routes/auth'));
+
 app.listen(PORT, () => {
     console.log(`Welcome to Advanced MERN Auth! You've created a server using Express. The server has started and is now listening on port ${PORT}...`);
 });
