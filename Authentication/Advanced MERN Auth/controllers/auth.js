@@ -9,7 +9,8 @@ exports.register = async (req, res, next) => {
 
         res.status(201).json({ success: true, user: user }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
     } catch (error) {
-
+        console.log("There was an error in the registration process: ", error);
+        res.status(500).json({ success: false, error: error.message }); // A 500 status code indicates that there was an internal server error
     }
 };
 
