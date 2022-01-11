@@ -20,6 +20,8 @@ const userSchema = new mongoose.Schema({
         minLength: 6,
         select: false // select() is a Mongoose method used to select document fields that are to be returned in the query result.
     },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date
     // events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }]
 });
 
