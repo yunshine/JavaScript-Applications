@@ -1,5 +1,9 @@
 require('dotenv').config({ path: './config.env' });
 const express = require("express");
+const connectDB = require('./config/db'); // mongoose/MongoDB settings imported from the db.js file in the config folder
+
+connectDB(); // to connect to database
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
