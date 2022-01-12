@@ -25,4 +25,11 @@ const userSchema = new mongoose.Schema({
     // events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }]
 });
 
+// the middleware below is a Mongoose function that allows something to be done before ("pre") a User gets saved.
+userSchema.pre("save", async function(next) {  // it's important to use the "function" keyword here instead of an arrow function because we need to use "this"...
+    if (!this.isModified("password")) {  // we are checking if the password being passed in is modified or not. If not, it won't rehash it - it'll call next() instead - it'll just save the current password without rehashing it.
+        next();
+    }
+});
+
 module.exports = mongoose.model('User', userSchema);
