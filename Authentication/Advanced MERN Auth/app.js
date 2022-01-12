@@ -13,8 +13,14 @@ app.use(express.json()); // this middleware is needed for incoming POST and PUT 
 // Middleware Routes
 app.use('/api/auth', require('./routes/auth'));
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Welcome to Advanced MERN Auth! You've created a server using Express. The server has started and is now listening on port ${PORT}...`);
+});
+
+// handling MongoDB connection errors...
+process.on("unhandledRejection", (error, promise) => {
+    console.log(`MongoDB database not connected: ${error}.`);
+    server.close(() => process.exit(1)); // stops the server without crashes with the status code of 1...
 });
 
 

@@ -10,6 +10,7 @@ const connectDB = async () => {
             // useFindAndModify: false
         });
     };
-    console.log('Your "Advanced MERN Auth" project has successfully connected to the MongoDB database!');
-    
+
+console.log('Your "Advanced MERN Auth" project has successfully connected to the MongoDB database!');
+
 module.exports = connectDB;
