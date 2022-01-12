@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require("bcryptjs"); // used to encrypt/hash passwords...
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -30,6 +31,11 @@ userSchema.pre("save", async function(next) {  // it's important to use the "fun
     if (!this.isModified("password")) {  // we are checking if the password being passed in is modified or not. If not, it won't rehash it - it'll call next() instead - it'll just save the current password without rehashing it.
         next();
     }
+
+    // if the password being passed has been modified, we need to hash it before we save it
+    const salt = await bcrypt.genSalt(10); // the "10" is the salt, which is used to make the hash more random...
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
 
 module.exports = mongoose.model('User', userSchema);
