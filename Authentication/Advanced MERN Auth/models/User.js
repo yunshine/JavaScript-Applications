@@ -38,9 +38,9 @@ userSchema.pre("save", async function (next) {  // it's important to use the "fu
     next();
 });
 
-// when a user tries to login, we'll use the function below to check if the password matches the one in the database
-userSchema.methods.matchPasswords = async function (password) {
+// when a user tries to login, we'll use the function below to check if the password from the req.body matches the one in the database
+userSchema.methods.comparePasswords = async function (password) {
     return await bcrypt.compare(password, this.password); // bcryptjs is used to compare the password in the req.body to the password in the database...
-}
+};
 
 module.exports = mongoose.model('User', userSchema);
