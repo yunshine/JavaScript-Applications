@@ -43,7 +43,8 @@ exports.login = async (req, res, next) => {
         // if we make it past the if statements to this point in the code, I want to respond with a token and let the user log in
         res.status(200).json({ success: true, token: 'random-gibberish-for-now' }); // A 200 status code indicates that the request has succeeded (depending on the HTTP request method)...
     } catch (error) {
-
+        console.log("There was an error in the login process: ", error);
+        res.status(500).json({ success: false, error: error.message }); // A 500 status code indicates that there was an internal server error
     }
 };
 
