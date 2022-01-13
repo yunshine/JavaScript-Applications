@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "Please provide an email address."], // the second value in the array (index 1) is an error message.
-        unique: true, 
+        unique: true,
         match: [/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Please provide a valid email address."] // the email address much match the regex at index 0.
         // enum: ['user', 'admin']
     },
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // the middleware below is a Mongoose function that allows something to be done before ("pre") a User gets saved.
-userSchema.pre("save", async function(next) {  // it's important to use the "function" keyword here instead of an arrow function because we need to use "this"...
+userSchema.pre("save", async function (next) {  // it's important to use the "function" keyword here instead of an arrow function because we need to use "this"...
     if (!this.isModified("password")) {  // we are checking if the password being passed in is modified or not. If not, it won't rehash it - it'll call next() instead - it'll just save the current password without rehashing it.
         next();
     }
@@ -37,5 +37,10 @@ userSchema.pre("save", async function(next) {  // it's important to use the "fun
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
+
+// when a user tries to login, we'll use the function below to check if the password matches the one in the database
+userSchema.methods.matchPasswords = async function (password) {
+    return await bcrypt.compare(password, this.password); // bcryptjs is used to compare the password in the req.body to the password in the database...
+}
 
 module.exports = mongoose.model('User', userSchema);
