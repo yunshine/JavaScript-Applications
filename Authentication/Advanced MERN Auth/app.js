@@ -1,6 +1,7 @@
 require('dotenv').config({ path: './config.env' });
 const express = require("express");
 const connectDB = require('./config/db'); // mongoose/MongoDB settings imported from the db.js file in the config folder
+const errorHandler = require('./middleware/error');
 
 connectDB(); // to connect to database
 
@@ -12,6 +13,9 @@ app.use(express.json()); // this middleware is needed for incoming POST and PUT 
 
 // Middleware Routes
 app.use('/api/auth', require('./routes/auth'));
+
+// Error Handle Middleware (should be last middleware in app.js; in other words, there should be no app.use after this line)
+app.use(errorHandler);
 
 const server = app.listen(PORT, () => {
     console.log(`Welcome to Advanced MERN Auth! You've created a server using Express. The server has started and is now listening on port ${PORT}...`);
