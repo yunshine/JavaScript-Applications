@@ -8,7 +8,7 @@ exports.register = async (req, res, next) => {
         // to register a user, we will create (and save) a new user to the database. Checking to see if the user already exists and hashing of the password prior to saving will take place in middleware.
         const user = await User.create({ username, email, password });
 
-        return res.status(201).json({ success: true, user: user }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
+        return res.status(201).json({ success: true, token: "token-gibberish" }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
     } catch (error) {
         console.log("There was a server error in the registration process: ", error);
         res.status(500).json({ success: false, error: error.message }); // A 500 status code indicates that there was an internal server error
@@ -46,7 +46,7 @@ exports.login = async (req, res, next) => {
         }
 
         // if we make it past the if statements to this point in the code, I want to respond with a token and let the user log in
-        return res.status(200).json({ success: true, token: 'random-gibberish-for-now' }); // A 200 status code indicates that the request has succeeded (depending on the HTTP request method)...
+        return res.status(200).json({ success: true, token: "token-gibberish" }); // A 200 status code indicates that the request has succeeded (depending on the HTTP request method)...
     } catch (error) {
         console.log("There was a server error in the login process: ", error);
         res.status(500).json({ success: false, error: error.message }); // A 500 status code indicates that there was an internal server error
@@ -60,3 +60,7 @@ exports.forgotPassword = (req, res, next) => {
 exports.resetPassword = (req, res, next) => {
     res.send("Reset Password Route");
 };
+
+const sendToken = (user, statusCode, res) => {
+
+}

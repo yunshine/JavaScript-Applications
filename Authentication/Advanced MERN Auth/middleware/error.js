@@ -4,7 +4,6 @@ const errorHandler = (err, req, res, next) => {
     let error = { ...err };
 
     error.message = err.message;
-    console.log("err from error Handler: ", err);
 
     if (err.code === 11000) {  // in Mongoose, 11000 is a duplicate key error
         const message = 'Duplicate Field Value Error';
