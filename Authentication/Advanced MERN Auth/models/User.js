@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs"); // used to encrypt/hash passwords...
+const jwt = require('jsonwebtoken'); // tokens used for authorization, not authentication...
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -41,6 +42,16 @@ userSchema.pre("save", async function (next) {  // it's important to use the "fu
 // when a user tries to login, we'll use the function below to check if the password from the req.body matches the one in the database
 userSchema.methods.comparePasswords = async function (password) {
     return await bcrypt.compare(password, this.password); // bcryptjs is used to compare the password in the req.body to the password in the database...
+};
+
+userSchema.methods.getSignedToken = function () {
+    // create a payload and send a token (with the payload/user) to the frontend to tell the frontend that this user was successfully authenticated and is authorized to use the routes in this app...
+    const payload = {
+        _id: this._id
+    };
+
+    // generates a token...
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
 };
 
 module.exports = mongoose.model('User', userSchema);
