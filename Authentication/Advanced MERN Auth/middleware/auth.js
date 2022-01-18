@@ -14,5 +14,24 @@ exports.protectRoute = async (req, res, next) => {
     if (!token) {
         return new ErrorResponse("Unauthorized. Access Denied.", 401); // A 401 status code indicates that the client request has not been completed because it lacks valid authentication credentials for the requested resource.
     }
+
+    // in this try/catch, we'll decode the token we just got
+    try {
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET); // what verify does is decrypt the token based on our secret
+
+        const user = await User.findById(decodedToken.id);
+
+        // if no user was found, the token was not valid, so...
+        if (!user) {
+            return next(new ErrorResponse("No user found.", 404)); // A 404 status code indicates that the server cannot find the requested resource.
+        }
+
+        // on the request object, we want to set that user and make it available to our protected routes
+        req.user = user;
+
+        next();
+    } catch (error) {
+
+    }
 }
 
