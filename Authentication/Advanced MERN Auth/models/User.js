@@ -1,6 +1,8 @@
+
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs"); // used to encrypt/hash passwords...
 const jwt = require('jsonwebtoken'); // tokens used for authorization, not authentication...
+const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -52,6 +54,14 @@ userSchema.methods.getSignedToken = function () {
 
     // generates a token...
     return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
+};
+
+// we'll use the function below when a user needs a token to reset their password
+userSchema.methods.getResetPasswordToken = function () {
+    const resetToken = crypto.randomBytes(20).toString("hex");
+
+    // now that we have our resetToken, we want to hash it, then save it to "resetPasswordToken in the User Model", so...
+    this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
 };
 
 module.exports = mongoose.model('User', userSchema);

@@ -33,7 +33,7 @@ exports.login = async (req, res, next) => {
         // if the email provided by the user does not exist...
         if (!user) {
             // return res.status(401).json({ success: false, error: "Sorry. That email address or password is incorrect." }); // The res. status() function sets the HTTP status for the response; A 401 status code indicates that the client request has not been completed because it lacks valid authentication credentials for the requested resource
-            return next(new ErrorResponse("Sorry. That email address or password is incorrect.", 401));
+            return next(new ErrorResponse("Sorry. That email address or password is incorrect.", 401)); // A 401 status code indicates that the client request has not been completed because it lacks valid authentication credentials for the requested resource.
         }
 
         // if the email address matches, bcryptjs is used to compare the password in the req.body to the password in the database...
@@ -43,7 +43,7 @@ exports.login = async (req, res, next) => {
         if (!isMatch) {
             console.log("Sorry. That email address or password is incorrect.")
             // return res.status(401).json({ success: false, error: "Sorry. That email address or password is incorrect." }); // The res. status() function sets the HTTP status for the response; A 401 status code indicates that the client request has not been completed because it lacks valid authentication credentials for the requested resource
-            return next(new ErrorResponse("Sorry. That email address or password is incorrect.", 401));
+            return next(new ErrorResponse("Sorry. That email address or password is incorrect.", 401)); // A 401 status code indicates that the client request has not been completed because it lacks valid authentication credentials for the requested resource.
         }
 
         // if we make it past the if statements to this point in the code, I want to respond with a token and let the user log in
@@ -55,8 +55,20 @@ exports.login = async (req, res, next) => {
     }
 };
 
-exports.forgotPassword = (req, res, next) => {
-    res.send("Forgot Password Route");
+exports.forgotPassword = async (req, res, next) => {
+    const { email } = req.body;
+
+    try {
+        // first, we need to check to see if the user exists in our database
+        const user = await User.findOne({ email });
+        if (!user) {
+            return next(new ErrorResponse("Sorry. An email could not be sent.", 404)); // A 404 status code indicates that the server cannot find the requested resource.
+        }
+
+        const resetToken = user.getResetPasswordToken();
+    } catch (error) {
+
+    }
 };
 
 exports.resetPassword = (req, res, next) => {
