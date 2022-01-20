@@ -66,6 +66,17 @@ exports.forgotPassword = async (req, res, next) => {
         }
 
         const resetToken = user.getResetPasswordToken();
+
+        // now that we have the resetToken (in the User model), we can save the user with this new resetToken into our database
+        await user.save();
+
+        const resetURL = `http://localhost:8080/passwordreset/${resetToken}`; //should be pointing to the frontend...
+
+        const message = `
+            <h3>You have requested a password reset.</h3>
+            <p>Please go to this link to reset your password</p>
+            <a href=${resetURL} clictracking-off>${resetURL}</a>
+        `;
     } catch (error) {
 
     }

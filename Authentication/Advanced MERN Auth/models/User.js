@@ -60,8 +60,13 @@ userSchema.methods.getSignedToken = function () {
 userSchema.methods.getResetPasswordToken = function () {
     const resetToken = crypto.randomBytes(20).toString("hex");
 
-    // now that we have our resetToken, we want to hash it, then save it to "resetPasswordToken in the User Model", so...
+    this.resetPasswordExpire = Date.now() + 10 * (60 * 1000); // sets the resetPassWordExpire to ten minutes from now...
+
+    // now that we have our resetToken, we want to hash it, then send/return the resetToken to the forgotPassword function in the auth controller so that it will save the resetToken to the "resetPasswordToken" field in the User Model, so...
     this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+
+    return resetToken;
 };
 
 module.exports = mongoose.model('User', userSchema);
