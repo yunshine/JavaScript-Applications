@@ -10,9 +10,9 @@ exports.protectRoute = async (req, res, next) => {
         token = req.headers.authorization.split(" ")[1]; // because the token should look something like "Bearer 98q723khadckjhv98q347k" with a space 
     }
 
+
     // if there was no token found, we take care of it using our ErrorResponse handler
     if (!token) {
-        console.log("working...");
         return next(new ErrorResponse("Access Denied. You Are Not Authorized to Access This Route adsfasdf.", 401)); // A 401 status code indicates that the client request has not been completed because it lacks valid authentication credentials for the requested resource.
     }
 
@@ -20,7 +20,8 @@ exports.protectRoute = async (req, res, next) => {
     try {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET); // what verify does is decrypt the token based on our secret
 
-        const user = await User.findById(decodedToken.id);
+        const user = await User.findById(decodedToken._id);
+        console.log("here...: ", user);
 
         // if no user was found, the token was not valid, so...
         if (!user) {
