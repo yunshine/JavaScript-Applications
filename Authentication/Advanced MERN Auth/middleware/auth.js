@@ -12,7 +12,8 @@ exports.protectRoute = async (req, res, next) => {
 
     // if there was no token found, we take care of it using our ErrorResponse handler
     if (!token) {
-        return new ErrorResponse("Access Denied. You Are Not Authorized to Access This Route.", 401); // A 401 status code indicates that the client request has not been completed because it lacks valid authentication credentials for the requested resource.
+        console.log("working...");
+        return next(new ErrorResponse("Access Denied. You Are Not Authorized to Access This Route adsfasdf.", 401)); // A 401 status code indicates that the client request has not been completed because it lacks valid authentication credentials for the requested resource.
     }
 
     // in this try/catch, we'll decode the token we just got

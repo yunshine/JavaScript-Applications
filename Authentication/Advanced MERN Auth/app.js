@@ -13,6 +13,7 @@ app.use(express.json()); // this middleware is needed for incoming POST and PUT 
 
 // Middleware Routes
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/private', require('./routes/private'));
 
 // Error Handle Middleware (should be last middleware in app.js; in other words, there should be no app.use after this line)
 app.use(errorHandler);
