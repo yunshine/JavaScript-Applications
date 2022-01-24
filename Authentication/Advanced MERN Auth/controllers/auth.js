@@ -89,10 +89,14 @@ exports.forgotPassword = async (req, res, next) => {
 
             res.status(200).json({ success: true, data: "Password Reset Email Successfully Sent." }); // A 200 status code indicates that the request has succeeded (depending on the HTTP request method)...
         } catch (error) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
 
+            await user.save();
+            return next(new ErrorResponse("Sorry. An email could not be sent.", 500)); // A 500 status code indicates that there was an internal server error
         }
     } catch (error) {
-
+        next(error);
     }
 };
 
