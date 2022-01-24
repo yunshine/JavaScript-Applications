@@ -1,5 +1,6 @@
 const User = require('../models/User'); // add in correct models...
 const ErrorResponse = require('../utilities/errorResponse');
+const sendEmail = require('../utilities/sendEmail');
 
 exports.register = async (req, res, next) => {
     const { username, email, password } = req.body;
@@ -72,7 +73,7 @@ exports.forgotPassword = async (req, res, next) => {
 
         const resetURL = `http://localhost:8080/passwordreset/${resetToken}`; //should be pointing to the frontend...
 
-        const message = `
+        const htmlMessage = `
             <h3>You have requested a password reset.</h3>
             <p>Please go to this link to reset your password</p>
             <a href=${resetURL} clictracking-off>${resetURL}</a>
@@ -80,7 +81,13 @@ exports.forgotPassword = async (req, res, next) => {
 
         // sending the email...
         try {
+            await sendEmail({
+                to: user.email,
+                subject: "Password Reset Request",
+                text: htmlMessage
+            });
 
+            res.status(200).json({ success: true, data: "Password Reset Email Successfully Sent." }); // A 200 status code indicates that the request has succeeded (depending on the HTTP request method)...
         } catch (error) {
 
         }
