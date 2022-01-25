@@ -21,7 +21,6 @@ exports.protectRoute = async (req, res, next) => {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET); // what verify does is decrypt the token based on our secret
 
         const user = await User.findById(decodedToken._id);
-        console.log("here...: ", user);
 
         // if no user was found, the token was not valid, so...
         if (!user) {

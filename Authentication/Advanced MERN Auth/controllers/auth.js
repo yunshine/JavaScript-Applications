@@ -62,6 +62,8 @@ exports.forgotPassword = async (req, res, next) => {
     try {
         // first, we need to check to see if the user exists in our database
         const user = await User.findOne({ email });
+
+
         if (!user) {
             return next(new ErrorResponse("Sorry. An email could not be sent.", 404)); // A 404 status code indicates that the server cannot find the requested resource.
         }
@@ -74,9 +76,9 @@ exports.forgotPassword = async (req, res, next) => {
         const resetURL = `http://localhost:8080/passwordreset/${resetToken}`; //should be pointing to the frontend...
 
         const htmlMessage = `
-            <h3>You have requested a password reset.</h3>
-            <p>Please go to this link to reset your password</p>
-            <a href=${resetURL} clictracking-off>${resetURL}</a>
+        <h3>You have requested a password reset.</h3>
+        <p>Please go to this link to reset your password</p>
+        <a href=${resetURL} clictracking-off>${resetURL}</a>
         `;
 
         // sending the email...
@@ -88,6 +90,7 @@ exports.forgotPassword = async (req, res, next) => {
             });
 
             res.status(200).json({ success: true, data: "Password Reset Email Successfully Sent." }); // A 200 status code indicates that the request has succeeded (depending on the HTTP request method)...
+            console.log("here...: ");
         } catch (error) {
             user.resetPasswordToken = undefined;
             user.resetPasswordExpire = undefined;
