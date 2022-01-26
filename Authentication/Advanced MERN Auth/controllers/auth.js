@@ -131,6 +131,6 @@ exports.resetPassword = async (req, res, next) => {
 
         return res.status(201).json({ success: true, data: "Password Successfully Reset." }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
     } catch (error) {
-
+        next(error);
     }
 };
