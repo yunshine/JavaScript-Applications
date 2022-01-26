@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs"); // used to encrypt/hash passwords...
 const jwt = require('jsonwebtoken'); // tokens used for authorization, not authentication...
-const crypto = require('crypto');
+const crypto = require('crypto'); // used for hashing tokens
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -64,7 +64,6 @@ userSchema.methods.getResetPasswordToken = function () {
 
     // now that we have our resetToken, we want to hash it, then send/return the resetToken to the forgotPassword function in the auth controller so that it will save the resetToken to the "resetPasswordToken" field in the User Model, so...
     this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-
 
     return resetToken;
 };

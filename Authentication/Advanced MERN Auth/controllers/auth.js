@@ -1,6 +1,7 @@
 const User = require('../models/User'); // add in correct models...
 const ErrorResponse = require('../utilities/errorResponse');
 const sendEmail = require('../utilities/sendEmail');
+const crypto = require('crypto'); // used for hashing tokens
 
 exports.register = async (req, res, next) => {
     const { username, email, password } = req.body;
@@ -103,11 +104,33 @@ exports.forgotPassword = async (req, res, next) => {
     }
 };
 
-exports.resetPassword = (req, res, next) => {
-    res.send("Reset Password Route");
-};
-
 const sendToken = (user, statusCode, res) => {
     const token = user.getSignedToken();
     res.status(statusCode).json({ success: true, token });
 }
+
+exports.resetPassword = async (req, res, next) => {
+    const resetPasswordToken = crypto.createHash("sha256").update(req.params.resetToken).digest("hex"); // recreates the resetToken based off of the resetToken we got from the req.params in the url (ie. /resetpassword/:resetToken)
+
+    // now that we have the resetPasswordToken, we search for the user with the same resetPasswordToken
+    try {
+        const user = await User.findOne({
+            resetPasswordToken: resetPasswordToken,
+            resetPasswordExpire: { $gt: Date.now() } // checking in MongoDB that the expire date is greater than the time now...
+        });
+
+        if (!user) {
+            return next(new ErrorResponse("Invalid Reset Token.", 400));
+        }
+
+        // if there is a user found AND the resetPasswordToken is valid...
+        user.password = req.body.password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save();
+
+        return res.status(201).json({ success: true, data: "Password Successfully Reset." }); // A 201 status code indicates that the request has succeeded and has led to the creation of a NEW resource
+    } catch (error) {
+
+    }
+};
