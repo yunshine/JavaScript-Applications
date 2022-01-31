@@ -9,7 +9,7 @@ const RegisterScreen = ({ history }) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleRegistration = (e) => {
+    const handleRegistration = async (e) => {
         e.preventDefault();
 
         const config = {
@@ -34,9 +34,12 @@ const RegisterScreen = ({ history }) => {
 
             history.pushState("/");
         } catch (error) {
-
+            setError(error.response.data.error);
+            setTimeout(() => {
+                setError("");
+            }, 5000);
         }
-    }
+    };
 
     return (
         <div className="RegisterScreen">
