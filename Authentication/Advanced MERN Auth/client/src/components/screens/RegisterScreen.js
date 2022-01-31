@@ -45,6 +45,7 @@ const RegisterScreen = ({ history }) => {
         <div className="RegisterScreen">
             <form className="RegisterScreen-form" onSubmit={handleRegistration}>
                 <h3 className="RegisterScreen-from-title">Register</h3>
+                {error && <p>{error}</p>}
                 <div className="form-group">
                     <label htmlFor="name">Username:</label>
                     <input type="text" required id="name" placeholder="Enter Username" value={username} onChange={(e) => setUsername(e.target.value)} />
