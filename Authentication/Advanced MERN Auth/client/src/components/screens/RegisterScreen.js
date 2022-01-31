@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'; // JS library used to make HTTP requests from node. js; supports the Promise API
 
@@ -8,6 +8,13 @@ const RegisterScreen = ({ history }) => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+
+    // checks to see if the user is already logged in or not...
+    useEffect(() => {
+        if (localStorage.getItem("authToken")) {
+            history.push("/");
+        }
+    }, [history]);
 
     const handleRegistration = async (e) => {
         e.preventDefault();
