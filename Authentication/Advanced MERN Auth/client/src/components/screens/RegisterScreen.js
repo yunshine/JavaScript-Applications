@@ -2,15 +2,45 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'; // JS library used to make HTTP requests from node. js; supports the Promise API
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ history }) => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleRegistration = (e) => {
+        e.preventDefault();
+
+        const config = {
+            header: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        if (password !== confirmPassword) {
+            setPassword("");
+            setConfirmPassword("");
+            setTimeout(() => {
+                setError("");
+            }, 5000);
+            return setError("Passwords do not match.")
+        }
+
+        try {
+            const { data } = await axios.post("/api/auth/register", { username, email, password }, config);
+
+            localStorage.setItems("authToken", data.token);
+
+            history.pushState("/");
+        } catch (error) {
+
+        }
+    }
 
     return (
         <div className="RegisterScreen">
-            <form className="RegisterScreen-form">
+            <form className="RegisterScreen-form" onSubmit={handleRegistration}>
                 <h3 className="RegisterScreen-from-title">Register</h3>
                 <div className="form-group">
                     <label htmlFor="name">Username:</label>
