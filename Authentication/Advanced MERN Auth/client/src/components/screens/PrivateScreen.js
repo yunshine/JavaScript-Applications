@@ -31,6 +31,11 @@ const PrivateScreen = ({ history }) => {
         fetchPrivateData();
     }, [history]);
 
+    const logoutHandler = () => {
+        localStorage.removeItem("authToken");
+        history.push("/login");
+    }
+
     return (
         <div className="PrivateScreen">
             {error ? <p>Error: {error}</p> : <p>privateData: {privateData}</p>}
