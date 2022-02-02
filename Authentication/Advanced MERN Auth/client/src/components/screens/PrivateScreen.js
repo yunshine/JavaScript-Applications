@@ -33,7 +33,8 @@ const PrivateScreen = ({ history }) => {
 
     return (
         <div className="PrivateScreen">
-            <h1>Privatescreen...</h1>
+            {error ? <p>Error: {error}</p> : <p>privateData: {privateData}</p>}
+            <button onClick={logoutHandler}>Logout</button>
         </div>
     );
 }
