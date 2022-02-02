@@ -10,7 +10,26 @@ const PrivateScreen = ({ history }) => {
         if (!localStorage.getItem("authToken")) {
             history.push("/login");
         }
-    }, []);
+
+        const fetchPrivateData = async () => {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("authToken")}`
+                }
+            }
+
+            try {
+                const { data } = await axios.get('api/private', config);
+                setPrivateData(data.data);
+            } catch (error) {
+                localStorage.removeItem("authToken");
+                setError("You don't have permission to do that. Please login.");
+            }
+        }
+
+        fetchPrivateData();
+    }, [history]);
 
     return (
         <div className="PrivateScreen">
