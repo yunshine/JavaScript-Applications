@@ -14,8 +14,8 @@ function App() {
                     {/* <Switch> // react-router-dom v. 5 syntax... */}
                     {/* <Route exact path="/login" element={LoginScreen} />  // react-router-dom v. 5 syntax... */}
 
-                    {/* <Route path="/" element={<PrivateRoute><PrivateScreen /></PrivateRoute>} /> */}
                     {/* <PrivateRoute path="/" element={<PrivateScreen />} /> */}
+                    <Route path="/" element={<PrivateRoute><PrivateScreen /></PrivateRoute>} />
 
                     <Route path="/login" element={<LoginScreen />} />
                     <Route path="/register" element={<RegisterScreen />} />
