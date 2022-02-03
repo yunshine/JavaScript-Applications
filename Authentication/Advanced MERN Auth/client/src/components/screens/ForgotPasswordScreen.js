@@ -6,6 +6,20 @@ const ForgotPasswordScreen = () => {
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
 
+    const forgotPasswordHandler = async (e) => {
+        e.preventDefault();
+
+        const config = { headers: { "Content-Type": "application/json" } };
+
+        try {
+            const { data } = await axios.post("/api/auth/forgotpassword", { email }, config);
+
+            setSuccess(data.data);
+        } catch (error) {
+
+        }
+    }
+
     return (
         <div className="ForgotPasswordScreen">
             <form onSubmit={forgotPasswordHandler}>
