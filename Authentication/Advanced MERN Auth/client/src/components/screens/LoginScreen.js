@@ -56,6 +56,7 @@ const LoginScreen = ({ history }) => {
                 <button type="submit">Login</button>
 
                 <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
+                <p>Forgot your password? <Link to="/forgotpassword">Reset Your Password</Link></p>
             </form>
         </div>
     );
