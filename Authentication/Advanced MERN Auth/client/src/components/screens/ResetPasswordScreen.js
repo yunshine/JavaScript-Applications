@@ -24,7 +24,7 @@ const ResetPasswordScreen = ({ match }) => {
 
         try {
             const { data } = await axios.put(`/api/auth/passwordreset/${match.params.resetToken}`, { password }, config);
-            console.log(data);
+
             setSuccess(data.data);
         } catch (error) {
             setError(error.response.data.error);
@@ -36,7 +36,37 @@ const ResetPasswordScreen = ({ match }) => {
 
     return (
         <div className="ResetPasswordScreen">
-            <h1>ResetPasswordscreen...</h1>
+            <form onSubmit={resetPasswordHandler}>
+                <h3>Reset Password</h3>
+                {error && <p>Error: {error}</p>}
+                {success && <Link to="/login">Login</Link>}
+                <div className="form-group">
+                    <label htmlFor="password">New Password: </label>
+                    <input
+                        type="password"
+                        required
+                        id="password"
+                        placeholder="Enter New Password"
+                        value={password}
+                        autoComplete="true"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="confirmpassword">Confirm New Password: </label>
+                    <input
+                        type="password"
+                        required
+                        id="confirmpassword"
+                        placeholder="Confirm New Password"
+                        value={confirmPassword}
+                        autoComplete="true"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                </div>
+                <button type="submit">Reset Password</button>
+            </form>
         </div>
     );
 }
