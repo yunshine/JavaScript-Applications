@@ -8,7 +8,24 @@ const ForgotPasswordScreen = () => {
 
     return (
         <div className="ForgotPasswordScreen">
-            <h1>ForgotPasswordscreen...</h1>
+            <form onSubmit={forgotPasswordHandler}>
+                <h3>Forgot Password</h3>
+                {error && <p>Error: {error}</p>}
+                {success && <p>Success: {success}</p>}
+                <div className="form-group">
+                    <p>Please enter the email address that you registered your account with. We will send you a password reset confirmation to this email address.</p>
+                    <label htmlFor="email">Email: </label>
+                    <input
+                        type="email"
+                        required
+                        id="email"
+                        placeholder="Email Address"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                <button type="submit">Send Email</button>
+            </form>
         </div>
     );
 }
