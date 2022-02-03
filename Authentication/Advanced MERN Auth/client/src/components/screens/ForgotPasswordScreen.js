@@ -16,9 +16,13 @@ const ForgotPasswordScreen = () => {
 
             setSuccess(data.data);
         } catch (error) {
-
+            setError(error.response.data.error);
+            setEmail("");
+            setTimeout(() => {
+                setError("");
+            }, 5000);
         }
-    }
+    };
 
     return (
         <div className="ForgotPasswordScreen">
