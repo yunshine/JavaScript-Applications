@@ -8,21 +8,23 @@ import PrivateRoute from './components/routing/PrivateRoute'; // ROUTING...
 
 function App() {
     return (
-        <Router>
-            <div className="App">
-                hi welcome to the app
-                {/* <Switch> // react-router-dom v. 5 syntax... */}
-                {/* <Route exact path="/login" element={LoginScreen} />  // react-router-dom v. 5 syntax... */}
+        <div className="App">
+            <Router>
                 <Routes>
-                    <PrivateRoute path="/" element={<PrivateScreen />} />
+                    {/* <Switch> // react-router-dom v. 5 syntax... */}
+                    {/* <Route exact path="/login" element={LoginScreen} />  // react-router-dom v. 5 syntax... */}
+
+                    {/* <Route path="/" element={<PrivateRoute><PrivateScreen /></PrivateRoute>} /> */}
+                    {/* <PrivateRoute path="/" element={<PrivateScreen />} /> */}
+
                     <Route path="/login" element={<LoginScreen />} />
                     <Route path="/register" element={<RegisterScreen />} />
                     <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
                     <Route path="/passwordreset/:resetToken" element={<ResetPasswordScreen />} />
+                    {/* </Switch> // react-router-dom v. 5 syntax... */}
                 </Routes>
-                {/* </Switch> // react-router-dom v. 5 syntax... */}
-            </div>
-        </Router>
+            </Router>
+        </div>
     );
 }
 

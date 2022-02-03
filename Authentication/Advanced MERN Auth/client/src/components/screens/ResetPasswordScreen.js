@@ -23,7 +23,7 @@ const ResetPasswordScreen = ({ match }) => {
         }
 
         try {
-            const { data } = await axios.put(`/api/auth/passwordreset/${match.params.resetToken}`, { password }, config);
+            const { data } = await axios.put(`/api/auth/resetpassword/${match.params.resetToken}`, { password }, config);
 
             setSuccess(data.data);
         } catch (error) {
