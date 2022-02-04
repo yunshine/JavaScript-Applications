@@ -31,7 +31,6 @@ const LoginScreen = ({ history }) => {
 
             localStorage.setItem("authToken", data.token);
 
-            console.log("Here: ", data);
             // history.push("/"); // old syntax...
             navigate("/");
         } catch (error) {

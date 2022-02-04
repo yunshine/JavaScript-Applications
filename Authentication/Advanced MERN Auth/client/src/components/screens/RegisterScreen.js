@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // JS library used to make HTTP requests from node. js; supports the Promise API
 
 const RegisterScreen = ({ history }) => {
@@ -9,10 +9,13 @@ const RegisterScreen = ({ history }) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
 
-    // checks to see if the user is already logged in or not...
+    const navigate = useNavigate(); // instead of history.push, react-router-dom version 6 uses this hook...
+
+    // checks to see if the user is already logged in or not. If so, they are automatically redirected...
     useEffect(() => {
         if (localStorage.getItem("authToken")) {
-            history.push("/");
+            // history.push("/"); // old syntax...
+            navigate("/");
         }
     }, [history]);
 
@@ -20,7 +23,7 @@ const RegisterScreen = ({ history }) => {
         e.preventDefault();
 
         const config = {
-            headers: {
+            header: {
                 "Content-Type": "application/json"
             }
         }
@@ -37,9 +40,10 @@ const RegisterScreen = ({ history }) => {
         try {
             const { data } = await axios.post("/api/auth/register", { username, email, password }, config);
 
-            localStorage.setItems("authToken", data.token);
+            localStorage.setItem("authToken", data.token);
 
-            history.pushState("/");
+            // history.push("/"); // old syntax...
+            navigate("/");
         } catch (error) {
             setError(error.response.data.error);
             setTimeout(() => {
