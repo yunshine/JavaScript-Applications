@@ -9,7 +9,7 @@ const ForgotPasswordScreen = () => {
     const forgotPasswordHandler = async (e) => {
         e.preventDefault();
 
-        const config = { headers: { "Content-Type": "application/json" } };
+        const config = { header: { "Content-Type": "application/json" } };
 
         try {
             const { data } = await axios.post("/api/auth/forgotpassword", { email }, config);

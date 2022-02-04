@@ -78,7 +78,7 @@ exports.forgotPassword = async (req, res, next) => {
 
         const htmlMessage = `
         <h3>You have requested a password reset.</h3>
-        <p>Please go to this link to reset your password</p>
+        <p>Please go to the following link to reset your password:</p>
         <a href=${resetURL} clictracking-off>${resetURL}</a>
         `;
 
@@ -90,8 +90,7 @@ exports.forgotPassword = async (req, res, next) => {
                 text: htmlMessage
             });
 
-            res.status(200).json({ success: true, data: "Password Reset Email Successfully Sent." }); // A 200 status code indicates that the request has succeeded (depending on the HTTP request method)...
-            console.log("here...: ");
+            res.status(200).json({ success: true, data: "An email to reset your password has been successfully sent." }); // A 200 status code indicates that the request has succeeded (depending on the HTTP request method)...
         } catch (error) {
             user.resetPasswordToken = undefined;
             user.resetPasswordExpire = undefined;
