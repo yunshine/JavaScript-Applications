@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const ResetPasswordScreen = ({ match }) => {
@@ -9,6 +9,7 @@ const ResetPasswordScreen = ({ match }) => {
     const [success, setSuccess] = useState("");
 
     const navigate = useNavigate(); // instead of history.push, react-router-dom version 6 uses this hook...
+    const { resetToken } = useParams();
 
     const resetPasswordHandler = async (e) => {
         e.preventDefault();
@@ -25,13 +26,14 @@ const ResetPasswordScreen = ({ match }) => {
         }
 
         try {
-            const { data } = await axios.put(`/api/auth/resetpassword/${match.params.resetToken}`, { password }, config);
+            const { data } = await axios.put(`/api/auth/resetpassword/${resetToken}`, { password }, config);
 
             setSuccess(data.data);
 
             // history.push("/"); // old syntax...
             navigate("/");
         } catch (error) {
+            console.log("reset password screen error: ", error);
             setError(error.response.data.error);
             setTimeout(() => {
                 setError("");
